@@ -1,4 +1,4 @@
 class FavoriteSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :name, :breweries
+  attributes :id, :beer, :breweries
 end

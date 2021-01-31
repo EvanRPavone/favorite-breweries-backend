@@ -5,21 +5,25 @@ class BreweriesController < ApplicationController
     end
 
     def show
-        breweries = Favorite.find_by(id: params[:favorite_name])
-        render json: BrewerySerializer.new(breweries)
+        breweries = Favorite.find_by(beer: params[:favorite_beer]).breweries
+        render json: BrewerySerializer.new(breweries.sample)
     end
 
     def create
         brewery = Brewery.new(brewery_params)
-        favorites = params[:favorites].map { |favorite| Favorite.find_or_create_by(name: favorite) }
+        favorites = params[:favorites].map { |favorite| Favorite.find_or_create_by(beer: favorite) }
         brewery.favorites << favorites
         brewery.save
         render json: BrewerySerializer.new(brewery)
     end
 
     def destroy
-        brewery = Brewery.find(id: params[:favorite_name])
-        brewery.destroy
+        breweries = Brewery.all
+        if breweries.destroy_all
+            render json: { message: 'Breweries deleted' }
+        else
+            render json: { errors: breweries.errors.full_messages }
+        end
     end
 
     private

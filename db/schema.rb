@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_01_28_182249) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.string "name"
+    t.string "beer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
